@@ -1,26 +1,26 @@
 version: '3.1'
 services:
-  web16:
-    image: odoo:16.0
+  web_instance2:
+    image: odoo:15.0
     depends_on:
-      - db16
+      - db_instance2
     ports:
       - "8070:8069"
     volumes:
-      - odoo-web-data:/var/lib/odoo
-      - ./config:/etc/odoo
-      - ./addons:/mnt/extra-addons
-  db16:
+      - odoo-web-data-instance2:/var/lib/odoo
+      - ./config_instance2:/etc/odoo
+      - ./addons_instance2:/mnt/extra-addons
+  db_instance2:
     image: postgres:14
     environment:
-      - POSTGRES_DB=postgres16
-      - POSTGRES_PASSWORD=odoo16
-      - POSTGRES_USER=odoo16
+      - POSTGRES_DB=odoo_instance2
+      - POSTGRES_PASSWORD=odoo_instance2
+      - POSTGRES_USER=odoo_instance2
       - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - "5436:5432"
     volumes:
-      - odoo-db-data:/var/lib/postgresql/data/
+      - odoo-db-data-instance2:/var/lib/postgresql/data/
 volumes:
-  odoo-web-data16:
-  odoo-db-data16:
+  odoo-web-data-instance2:
+  odoo-db-data-instance2:
