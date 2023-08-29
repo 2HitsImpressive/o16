@@ -1,19 +1,30 @@
-version: '3'
+version: '3.8'
 services:
-  db:
-    image: postgres:13
-    environment:
-      POSTGRES_DB: odoo_instance2
-      POSTGRES_USER: odoo_instance2
-      POSTGRES_PASSWORD: odoo_instance2
-  web:
-    image: odoo:14
+  odoo:
+    container_name: v16
+    image: odoo:16.0
     depends_on:
       - db
     ports:
-      - "8070:8069"
+      - "8071:8069"
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
+      - ./addons-customize:/mnt/extra-addons-customize
+    entrypoint: "/usr/bin/odoo -c /etc/odoo/odoo.conf"
+  db:
+    container_name: postgresdb
+    image: postgres:14.0
     environment:
-      HOST: db
-      USER: odoo_instance2
-      PASSWORD: odoo_instance2
-      DB_NAME: odoo_instance2
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo_db
+      - POSTGRES_USER=odoo_db
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "5436:5432"
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+volumes:
+  odoo-db-data:
+  odoo-web-data:
