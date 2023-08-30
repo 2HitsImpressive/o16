@@ -14,7 +14,7 @@ services:
       - ./addons-customize:/mnt/extra-addons-customize
     entrypoint: "/usr/bin/odoo -c /etc/odoo/odoo.conf"
   db:
-    container_name: postgresdb
+    container_name: db16
     image: postgres:14.0
     environment:
       - POSTGRES_DB=postgres
